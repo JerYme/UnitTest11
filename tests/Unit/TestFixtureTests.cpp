@@ -31,6 +31,7 @@ namespace
 		MockAction(PushWhen, ut11::detail::TestStep)
 		MockAction(PushThen, ut11::detail::TestStep)
 		MockAction(PushFinally, ut11::detail::TestStep)
+		MockFunction( std::shared_ptr<ut11::detail::TestStage> ,PushInfo, ut11::detail::TestStep)
 		MockFunction(std::vector< std::shared_ptr<ut11::detail::TestStage> >, Build)
 	};
 
@@ -60,6 +61,7 @@ namespace
 		MockAction(BeginFinally, std::string)
 		MockAction(EndFinally, std::string)
 
+		MockAction(OnInfo, std::string)
 		MockAction(OnError, std::size_t, std::string, std::string)
 		MockAction(OnUnknownError)
 
@@ -294,3 +296,38 @@ public:
 };
 DeclareFixture(TestFixtureCategoryTests)(ut11::Category("unit"));
 
+
+class TestFixtureLogInfoTests : public ut11::TestFixture
+{
+private:
+	std::unique_ptr<ut11::TestFixture> m_fixture;
+	std::string m_name;
+
+public:
+	virtual void Run()
+	{
+	       Info("out before");
+		Given("GIVEN", [&]() {
+
+			Info("inside given");
+		});
+		When("WHEN 1", [&]() {
+
+		    Info("inside when 1");
+		});
+		Then("THEN 1", [&]() {
+
+			Info("inside then 1");
+		});
+
+		When("WHEN 2", [&]() {
+
+		    Info("inside when 2");
+		});
+		Then("THEN 2", [&]() {
+		      Info("inside then 2");
+		});
+		Info("out after");
+	}
+};
+DeclareFixture(TestFixtureLogInfoTests)(ut11::Category("log info"));

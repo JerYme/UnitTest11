@@ -59,15 +59,29 @@ void ut11::TestFixture::Finally(std::string description, std::function<void(void
 	m_StageBuilder->PushFinally(detail::TestStep(description, logic));
 }
 
+void ut11::TestFixture::Info(std::string message)
+{
+  if (m_isRunning)
+    {
+      m_output->OnInfo(message);
+      return;
+    }
+
+m_StageBuilder->PushInfo(detail::TestStep(message));
+
+}
+
 ut11::detail::TestFixtureResults ut11::TestFixture::Run(out::Output& output)
 {
 	output.BeginFixture(m_name);
-
 	Run();
+
+	m_output = &output;
 
 	ut11::detail::TestFixtureResults counter;
 	for (auto stage : m_StageBuilder->Build())
 	{
+	    m_isRunning = true;
 		++counter.ran;
 
 		if ( stage->Run(output) )

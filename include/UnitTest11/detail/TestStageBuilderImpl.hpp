@@ -19,7 +19,8 @@ namespace ut11
 				Given,
 				When,
 				Then,
-				Finally
+				Finally,
+				Void
 			};
 
 		public:
@@ -29,6 +30,7 @@ namespace ut11
 			virtual void PushWhen(TestStep when);
 			virtual void PushThen(TestStep then);
 			virtual void PushFinally(TestStep finally);
+			virtual  std::shared_ptr<TestStage> PushInfo(TestStep finally);
 
 			virtual std::vector< std::shared_ptr<TestStage> > Build();
 

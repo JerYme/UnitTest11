@@ -35,6 +35,7 @@ namespace ut11
 			virtual void BeginFinally(std::string) = 0;
 			virtual void EndFinally(std::string) = 0;
 
+			virtual void OnInfo(std::string message) = 0;
 			virtual void OnError(std::size_t line, std::string file, std::string message) = 0;
 			virtual void OnError(const std::exception& exception) = 0;
 			virtual void OnUnknownError() = 0;

@@ -11,6 +11,7 @@ namespace ut11
 		struct TestStep
 		{
 			TestStep() : description(), logic() { }
+			TestStep(std::string d) : description(d), logic() { }
 			TestStep(std::string d, std::function<void(void)> l) : description(d), logic(l) { }
 
 			std::string description;

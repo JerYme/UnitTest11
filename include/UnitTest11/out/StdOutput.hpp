@@ -33,6 +33,7 @@ namespace ut11
 			virtual void EndThen(std::string);
 			virtual void EndFinally(std::string);
 
+			virtual void OnInfo(std::string message);
 			virtual void OnError(std::size_t line, std::string file, std::string message);
 			virtual void OnError(const std::exception& exception);
 

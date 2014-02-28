@@ -11,9 +11,10 @@ namespace ut11
 		class TestStageImpl : public TestStage
 		{
 		public:
-			TestStep m_given, m_when, m_then, m_finally;
+			TestStep m_given, m_when, m_then, m_finally, m_once;
 
 			TestStageImpl();
+			TestStageImpl(TestStep once);
 			TestStageImpl(TestStep given, TestStep when, TestStep then, TestStep finally);
 			virtual ~TestStageImpl();
 

@@ -24,6 +24,12 @@ void ut11::detail::TestStageBuilderImpl::PushFinally(TestStep finally)
 	m_steps.push_back(std::make_pair(TestStepType::Finally, finally));
 }
 
+std::shared_ptr<ut11::detail::TestStage>  ut11::detail::TestStageBuilderImpl::PushInfo(TestStep once)
+{
+	m_steps.push_back(std::make_pair(TestStepType::Void, once));
+	return std::make_shared<ut11::detail::TestStageImpl>( once);
+}
+
 std::vector< std::shared_ptr<ut11::detail::TestStage> > ut11::detail::TestStageBuilderImpl::Build()
 {
 	std::vector<ut11::detail::TestStageImpl> finallylessStages, finishedStages;
@@ -40,6 +46,10 @@ std::vector< std::shared_ptr<ut11::detail::TestStage> > ut11::detail::TestStageB
 
 		case TestStepType::When:
 			when = stepTypePair.second;
+			break;
+
+		  case TestStepType::Void:
+			finallylessStages.push_back(TestStageImpl(stepTypePair.second));
 			break;
 
 		case TestStepType::Then:

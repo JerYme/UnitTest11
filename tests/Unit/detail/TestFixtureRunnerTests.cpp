@@ -32,6 +32,7 @@ namespace
 		MockAction(BeginFinally, std::string)
 		MockAction(EndFinally, std::string)
 
+		MockAction(OnInfo, std::string)
 		MockAction(OnError, std::size_t, std::string, std::string)
 		MockAction(OnUnknownError)
 

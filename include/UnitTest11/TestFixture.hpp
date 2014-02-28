@@ -28,12 +28,16 @@ namespace ut11
 		inline void SetName(std::string name) { m_name = name; }
 		virtual std::string GetName() const { return m_name; }
 
+		virtual void Info(std::string message);
+
 		virtual detail::TestFixtureResults Run(out::Output& output);
 
 		/*! \brief The function to inherit from that is called to build the test Given/When/Then/Finally tree */
 		virtual void Run();
 
 	private:
+		bool m_isRunning;
+		out::Output* m_output;
 		std::string m_name;
 		std::unique_ptr<ut11::detail::TestStageBuilder> m_StageBuilder;
 		std::set<ut11::Category> m_categories;

@@ -5,7 +5,17 @@ ut11::detail::TestStageImpl::TestStageImpl()
 	: m_given(),
 	  m_when(),
 	  m_then(),
-	  m_finally()
+	  m_finally(),
+	  m_once()
+{
+}
+
+ut11::detail::TestStageImpl::TestStageImpl(TestStep once)
+	: m_given(),
+	  m_when(),
+	  m_then(),
+	  m_finally(),
+	  m_once(once)
 {
 }
 
@@ -13,7 +23,8 @@ ut11::detail::TestStageImpl::TestStageImpl(TestStep given, TestStep when, TestSt
 	: m_given(given),
 	  m_when(when),
 	  m_then(then),
-	  m_finally(finally)
+	  m_finally(finally),
+	  m_once()
 {
 }
 
@@ -24,6 +35,12 @@ ut11::detail::TestStageImpl::~TestStageImpl()
 
 bool ut11::detail::TestStageImpl::Run(out::Output& output)
 {
+  if (!m_once.description.empty())
+    {
+      output.OnInfo(m_once.description);
+    return true;
+    }
+
 	auto runInsideTryCatch = [&](std::function<void(void)> func) -> bool {
 
 		try
@@ -105,8 +122,8 @@ void ut11::detail::TestStageImpl::Then(out::Output& output)
 
 void ut11::detail::TestStageImpl::Finally(out::Output& output)
 {
-	if ( !m_finally.logic )
-		return;
+  if ( !m_finally.logic )
+      return;
 
 	output.BeginFinally(m_finally.description);
 	m_finally.logic();

@@ -123,6 +123,13 @@ void ut11::out::StdOutput::Finish(std::size_t ran, std::size_t succeeded)
 		  << std::endl;
 }
 
+
+void ut11::out::StdOutput::OnInfo(std::string message)
+{
+    m_out << "\n\tInfo: "
+          << message;
+}
+
 void ut11::out::StdOutput::OnError(const std::exception& exception)
 {
 	m_out << "\n\tFailed: std::exception was thrown [what(): " << exception.what() << "]";
